@@ -1,16 +1,13 @@
-using System.Globalization;
-using System.Numerics;
-using TMPro;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using System.Numerics;
 
-public class StringPurchaseButtonScript : MonoBehaviour
+public static class NumberFormatter
 {
-    public BigInteger score = BigInteger.Parse("1330756719859999967813897518675");
-    public TextMeshProUGUI scoreText;
-
-    string[] suffixes = {
+    private static string[] suffixes = {
         "",
-        " Thousand",
+        "",
         " Million",
         " Billion",
         " Trillion",
@@ -51,13 +48,22 @@ public class StringPurchaseButtonScript : MonoBehaviour
         " Octotrigintillion",
         " Novemtrigintillion",
         " Quardragintillion",
-        " Unquardragintillion"
+        " Unquardragintillion",
+        " Duoquardragintillion",
+        " Triquardragintillion",
+        " Quattuarquardragintillion",
+        " Quinquardragintillion",
+        " Sexquardragintillion",
+        " Septenquardragintillion",
+        " Octoquardragintillion",
+        " Novemquardragintillion",
+        " Quinquagintillion",
     };
 
-    void FixedUpdate()
+    public static string FormatNumber(BigInteger score)
     {
         double scaledScore;
-        int suffixIndex = 0;
+        var suffixIndex = 0;
 
         if (score < BigInteger.Pow(10, 6))
         {
@@ -73,7 +79,7 @@ public class StringPurchaseButtonScript : MonoBehaviour
             scaledScore = (double)score / (double)BigInteger.Pow(10, suffixIndex * 3);
         }
 
-        string suffix = suffixes[suffixIndex];
+        var suffix = suffixes[suffixIndex];
 
         string scoreFormatted;
 
@@ -86,6 +92,6 @@ public class StringPurchaseButtonScript : MonoBehaviour
             scoreFormatted = string.Format("{0:#,##0.00}", scaledScore);
         }
 
-        scoreText.text = scoreFormatted + suffix;
+        return scoreFormatted + suffix;
     }
 }
