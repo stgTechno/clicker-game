@@ -15,12 +15,13 @@ public class TestButtonDeductScript : MonoBehaviour, IDataStorage
     public void SaveData(ref GameData data)
     {
         data.entropy = session.sessionEntropy.ToString();
-        print("Added");
     }
 
     public void MainButtonPress()
     {
+        if (session.sessionEntropy <= 0) return;
         session.sessionEntropy--;
         entropyText.text = session.sessionEntropy.ToString();
+        print(session.sessionEntropy);
     }
 }
