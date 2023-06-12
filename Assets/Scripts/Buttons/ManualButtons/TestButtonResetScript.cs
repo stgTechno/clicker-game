@@ -1,7 +1,8 @@
-﻿using System.Numerics;
+using System.Numerics;
 using TMPro;
 using UnityEngine;
-public class TestButtonDeductScript : MonoBehaviour, IDataStorage
+
+public class TestButtonResetScript : MonoBehaviour, IDataStorage
 {
     public Session session;
     public TextMeshProUGUI entropyText;
@@ -15,12 +16,12 @@ public class TestButtonDeductScript : MonoBehaviour, IDataStorage
     public void SaveData(ref GameData data)
     {
         data.entropy = session.sessionEntropy.ToString();
-        print("Added");
     }
 
     public void MainButtonPress()
     {
-        session.sessionEntropy--;
+        session.sessionEntropy = 0;
         entropyText.text = session.sessionEntropy.ToString();
+        print(session.sessionEntropy);
     }
 }

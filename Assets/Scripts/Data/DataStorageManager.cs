@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
@@ -22,8 +23,6 @@ public class DataStorageManager : MonoBehaviour
         }
 
         Instance = this;
-
-        Application.quitting += SaveGame;
     }
 
     private void Start()
@@ -70,6 +69,11 @@ public class DataStorageManager : MonoBehaviour
         Debug.Log("Saved Entropy = " + _gameData.entropy);
         // Save temporary data to a file using data handler
         _dataHandler.Save(_gameData);
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveGame();
     }
 
     private List<IDataStorage> FindAllDataPersistenceObjects()

@@ -1,5 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class BackgroundMusicScript : MonoBehaviour
 {
@@ -7,18 +8,18 @@ public class BackgroundMusicScript : MonoBehaviour
     public AudioSource track2;
     public AudioSource track3;
 
-    private static BackgroundMusicScript _instance;
+    public static BackgroundMusicScript instance;
 
     public int trackSelector;
     public int trackHistory;
 
     public AudioSource[] tracks;
 
-    private void Awake()
+    void Awake()
     {
-        if(_instance == null)
+        if(instance == null)
         {
-            _instance = this;
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -26,23 +27,24 @@ public class BackgroundMusicScript : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private void Start()
+
+    void Start()
     {
         tracks = new AudioSource[] { track1, track2, track3 };
-        PlayMusic();
+        playMusic();
     }
 
-    private void Update()
+    void Update()
     {
         if (!tracks[trackSelector].isPlaying && !AudioListener.pause)
         {
-            PlayMusic();
+            playMusic();
         }
     }
 
-    private void PlayMusic()
+    private void playMusic()
     {
-        var previousTrack = trackSelector;
+        int previousTrack = trackSelector;
 
         do
         {
@@ -53,7 +55,7 @@ public class BackgroundMusicScript : MonoBehaviour
         tracks[trackSelector].Play();
     }
 
-    private void OnApplicationFocus(bool hasFocus)
+    void OnApplicationFocus(bool hasFocus)
     {
         AudioListener.pause = !hasFocus;
     }
